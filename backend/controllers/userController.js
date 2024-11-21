@@ -75,11 +75,9 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const resetToken = user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  // const resetPasswordUrl = `${req.protocol}://${req.get(
-  //   "host"
-  // )}/api/v1/password/reset/${resetToken}`;
-
-  const resetPasswordUrl = `${process.env.FRONTEND_PORT}/password/reset/${resetToken}`;
+  const resetPasswordUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/password/reset/${resetToken}`;
 
   const message = `Your password reset token is:\n\n${resetPasswordUrl}\n\nBeware of hackers. Do not share OTP with anyone. If you have not requested this email, please ignore it.`;
 

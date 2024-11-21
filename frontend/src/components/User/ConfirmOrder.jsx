@@ -105,7 +105,7 @@ export default function ConfirmOrder() {
         image: "https://avatars.githubusercontent.com/u/124631079?s=400&v=4",
         order_id: order.id,
         callback_url:
-          "/api/v1/paymentVerification",
+          "https://thaichillichina.onrender.com/api/v1/paymentVerification",
         prefill: {
           name: user.name,
           email: user.email,
