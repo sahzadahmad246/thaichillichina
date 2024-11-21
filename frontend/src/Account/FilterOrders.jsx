@@ -22,6 +22,7 @@ const FilterOrders = ({ filter, handleFilterChange }) => {
           name="status"
           value={filter.status}
           onChange={handleFilterChange}
+          className="bg-white"
         >
           <option value="">Order Status</option>
           <option value="delivered">Delivered</option>
@@ -29,7 +30,7 @@ const FilterOrders = ({ filter, handleFilterChange }) => {
         </select>
       </div>
       <div className="last-30-day">
-        <select name="month" value={filter.month} onChange={handleFilterChange}>
+        <select name="month" value={filter.month} className="bg-white" onChange={handleFilterChange}>
           <option value="">By Months</option>
           <option value="1">January</option>
           <option value="2">February</option>
@@ -46,7 +47,7 @@ const FilterOrders = ({ filter, handleFilterChange }) => {
         </select>
       </div>
       <div className="last-30-day">
-        <select name="year" value={filter.year} onChange={handleFilterChange}>
+        <select name="year" value={filter.year} className="bg-white" onChange={handleFilterChange}>
           <option value="">By Year</option>
           {[...Array(10)].map((_, i) => (
             <option key={i} value={new Date().getFullYear() - i}>
