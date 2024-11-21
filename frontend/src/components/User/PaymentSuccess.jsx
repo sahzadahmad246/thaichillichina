@@ -64,8 +64,8 @@ const PaymentSuccess = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white rounded-lg shadow-md p-8 w-full max-w-md text-center">
+    <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="bg-white rounded-lg  p-8 w-full max-w-md text-center">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">Order Placed Successfully!</h1>
         <motion.div
           className="mb-6"
