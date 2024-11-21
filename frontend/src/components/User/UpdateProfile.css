@@ -1,0 +1,18 @@
+.main-update-profile {
+    margin: 15px auto;
+    width: 95%;
+  }
+  
+  .update-profile-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+  
+  .full-width {
+    grid-column: span 2; 
+  }
+  
+  .update-profile-btn{
+    margin: 10px auto;
+  }

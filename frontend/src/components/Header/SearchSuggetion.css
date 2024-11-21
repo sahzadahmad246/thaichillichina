@@ -1,0 +1,135 @@
+.suggetion-card {
+  margin: 20px auto;
+  width: 90%;
+  min-height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 0.5px solid#d0d0d0;
+  border-radius: 10px;
+  background: #fbf8f8;
+  transition: all 0.5s;
+
+  padding: 0px 10px;
+}
+.suggetion-card-left {
+  width: 60px;
+  height: 60px;
+
+  position: relative;
+}
+
+.suggetion-card-left img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.suggetion-card-right {
+  padding: 4px;
+  width: 260px;
+  height: auto;
+}
+.suggetion-card-right .product-name {
+  padding: 0;
+  font-weight: 600;
+  margin: 0;
+  font-size: 12px;
+  color: #000;
+}
+.suggetion-card-right .product-price {
+  color: tomato;
+  font-size: 11px;
+  line-height: 7px;
+  margin: 3px 0px;
+  /* font-weight: 600; */
+}
+
+.suggetion-card-right .product-rating {
+  color: gray;
+  font-size: 10px;
+  line-height: 13px;
+  margin: 3px 0px;
+}
+.suggetion-card-right button {
+  border: 1px solid #ff004d;
+  width: 90%;
+  margin: 0px 9px;
+  border-radius: 7px;
+  background: rgb(254, 235, 235);
+  font-size: 14px;
+  color: #ff004d;
+}
+.productCard:hover {
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+background: #f2f4f9;
+}
+@media (max-width: 768px) {
+  .container > .see-all-btn {
+    margin: 10px;
+    width: 95%;
+  }
+  #container {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  .suggetion-card {
+    margin: 15px auto;
+    width: 97%;
+    min-height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    flex-direction: unset;
+    background: #ffff;
+    border: 0.5px solid gray;
+    border-radius: 10px;
+    transition: unset;
+  }
+  .suggetion-card-left {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .suggetion-card-left img {
+    width: 90px;
+    height: 90px;
+  }
+  .suggetion-card-right {
+    width: 230px;
+    height: auto;
+    margin-top: unset;
+  }
+  .suggetion-card-right .suggetion-card-right .product-name {
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+    color: #000;
+  }
+  .suggetion-card-right .suggetion-card-right .product-price {
+    color: tomato;
+    font-size: 13px;
+    line-height: 14px;
+    margin: 3px 0px;
+  }
+  .suggetion-card-right .suggetion-card-right .product-description,
+  .suggetion-card-right .suggetion-card-right .product-rating {
+    color: gray;
+    font-size: 13px;
+    line-height: 14px;
+    margin: 3px 0px;
+  }
+  .suggetion-card-right button {
+    display: none;
+  }
+  .productCard:hover {
+    box-shadow: unset;
+    transform: unset;
+  }
+}

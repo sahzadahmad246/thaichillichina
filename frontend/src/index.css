@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito Sans", sans-serif;
+
+}
+
+@media only screen and (max-width: 767px) {
+  body{
+    margin-bottom: 16vmax;
+  }
+}

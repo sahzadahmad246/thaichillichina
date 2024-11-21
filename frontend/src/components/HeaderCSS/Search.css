@@ -1,0 +1,84 @@
+.main-search {
+  border: 1px solid rgb(200, 198, 198);
+  height: 82vh; /* Adjust the minimum height as needed */
+  margin: 7px 10px;
+  padding: 10px;
+  width: 35%;
+  float: right;
+  border-radius: 10px;
+  background: #fff; 
+  z-index: 9999;
+  position: absolute;
+  top: 65px;
+  right: 10px;
+  overflow-y: auto; 
+}
+
+.main-search::-webkit-scrollbar {
+  width: 6px; 
+}
+
+.main-search::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); 
+  border-radius: 10px; 
+}
+
+.main-search::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1); 
+}
+
+.search-box {
+  padding: 7px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 8px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+.search-box span {
+  color: #ff004d;
+  width: 10%;
+  font-size: 18px;
+}
+.search-box input {
+  width: 85%;
+  padding: 5px 0px;
+  font-size: 20px;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .main-search {
+    border: 1px solid red;
+    min-height: 55vh;
+    border: unset;
+    width: 100%;
+    border-radius: 0px;
+    height: 90vh;
+    margin: 0px;
+    padding: 10px;
+    /* background-image: url("src/images/rice.jpg"); */
+    background-size: cover;
+    background-position: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: unset;
+    top: unset;
+    right: unset;
+  }
+  .search-box {
+    height: 50px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+  .search-box span {
+    font-size: 20px;
+  }
+  .search-box input {
+    padding: 7px 0px;
+    font-size: 20px;
+    outline: none;
+  }
+}

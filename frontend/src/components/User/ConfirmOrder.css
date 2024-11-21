@@ -1,0 +1,219 @@
+.confirm-order-main {
+  min-height: 80vh;
+  margin: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-order-main .confirm-order-left {
+  width: 60%;
+
+  margin: 10px;
+}
+.confirm-order-main .confirm-order-right {
+  width: 35%;
+  margin: 8px 0px;
+  height: auto;
+ 
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(1px);
+  height: 65vh;
+}
+.confirm-shipping-info {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.confirm-cartItem-info {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+ padding-bottom: 5px;
+}
+
+.confirm-cartItem-info h1 {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #ecf0f3;
+  font-size: 20px;
+}
+.confirm-cartItem {
+  margin: 0px;
+  
+}
+.confirm-cartItem .cartItem-in-confirm {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.cartItem-in-confirm div {
+  display: flex;
+  width: 60%;
+  align-items: center;
+}
+.cartItem-in-confirm img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.cartItem-in-confirm a {
+}
+
+.order-summary {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.order-summary h1 {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #ecf0f3;
+  font-size: 20px;
+}
+.order-summary .price-info {
+  margin: 7px 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 7px;
+  font-size: 15px;
+}
+.proceed-to-pay {
+  width: 90%;
+  margin: 10px auto;
+  background: #ff004d;
+  padding: 7px;
+  margin: 20px auto;
+  color: #fff;
+}
+
+.total-price-info {
+  border-top: 1px dashed #000;
+  display: flex;
+  justify-content: space-between;
+}
+.total-price-info h2 {
+  margin: 10px 20px;
+  padding: 7px;
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  .confirm-order-main {
+    min-height: 80vh;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .confirm-order-main .confirm-order-left {
+    width: 100%;
+    margin: 0px 0px;
+  }
+  .confirm-order-main .confirm-order-right {
+    width: 100%;
+    border: 1px solid #ddd;
+    margin: 30px 0px;
+    height: auto;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(1px);
+  }
+  .confirm-shipping-info {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+
+  .confirm-cartItem-info {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+   padding-bottom: 5px;
+  }
+
+  .confirm-cartItem-info h1 {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    background: #ecf0f3;
+    font-size: 20px;
+  }
+  .confirm-cartItem {
+    margin: 0px;
+    
+  }
+  .confirm-cartItem .cartItem-in-confirm {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 10px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .cartItem-in-confirm div {
+    display: flex;
+    width: 60%;
+    align-items: center;
+  }
+  .cartItem-in-confirm img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  .cartItem-in-confirm a {
+  }
+
+  .order-summary {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-summary h1 {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    background: #ecf0f3;
+    font-size: 20px;
+  }
+  .order-summary .price-info {
+    margin: 7px 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 7px;
+    font-size: 15px;
+  }
+  .proceed-to-pay {
+    width: 90%;
+    margin: 10px auto;
+    background: #ff004d;
+    padding: 7px;
+    margin: 20px auto;
+    color: #fff;
+  }
+
+  .total-price-info {
+    border-top: 1px dashed #000;
+    display: flex;
+    justify-content: space-between;
+  }
+  .total-price-info h2 {
+    margin: 10px 20px;
+    padding: 7px;
+    font-size: 18px;
+  }
+}

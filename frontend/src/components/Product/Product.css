@@ -1,0 +1,124 @@
+.productCard {
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 15px;
+  width: 100%;
+  background: #fff;
+}
+
+.product-box-left {
+  width: 30%;
+  margin: 5px;
+}
+.product-box-left img {
+  border-radius: 15px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.product-box-right {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 3px;
+}
+
+.product-box-left img {
+  width: 150px;
+}
+.product-box-right .product-name {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px;
+}
+.product-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.p-price-add-c {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 8px;
+  margin: 6px 0px;
+}
+.product-name-price {
+  padding: 4px;
+  margin: 6px 0px;
+  width: 100%;
+  display: flex;
+}
+.product-name-price img {
+  width: 25px;
+}
+@media (max-width: 768px) {
+  .productCard {
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 15px;
+    width: 100%;
+  }
+
+  .product-box-left {
+    width: 30%;
+    margin: 5px;
+  }
+  .product-box-left img {
+    border-radius: 15px;
+  }
+
+  .product-box-right {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 3px;
+  }
+
+  .product-box-left img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  .product-box-right .product-name {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .product-rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .p-price-add-c {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px 8px;
+    margin: 6px 0px;
+  }
+  .product-name-price {
+    padding: 4px;
+    margin: 6px 0px;
+    width: 100%;
+    display: flex;
+  }
+  .product-name-price img {
+    width: 25px;
+  }
+}

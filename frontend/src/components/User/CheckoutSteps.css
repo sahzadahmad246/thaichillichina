@@ -1,0 +1,16 @@
+.MuiStepConnector-line {
+    border-color: #71515b; 
+    border: 1.5px solid #71515b;
+}
+  
+  .MuiStepConnector-root {
+    background-color: transparent; /* Ensures the root background does not interfere */
+  }
+  
+  .MuiStepConnector-line.Mui-completed,
+  .MuiStepConnector-line.Mui-active {
+    border-color: #ff004d; /* Color for completed and active steps */
+  }
+  .step-label{
+    font-size: 10px;
+  }

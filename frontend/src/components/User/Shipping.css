@@ -1,0 +1,134 @@
+.shipping-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0px;
+}
+.shipping-info {
+  width: 60%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+
+.checkout-stepper {
+  margin: 20px auto;
+  width: 70%;
+  padding: 16px;
+}
+
+.shipping-info-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #ecf0f3;
+}
+.shipping-info-top h1 {
+  font-size: 20px;
+}
+.shipping-info-top button {
+  padding: 2px;
+  width: 80px;
+  color: #ff004d;
+  border-radius: 17px;
+  border: 1px solid #ff004d;
+}
+
+.shipping-info-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 90%;
+  margin: 15px auto;
+}
+
+.shipping-info-main p {
+  display: flex;
+  align-items: center;
+  color: rgb(49, 54, 76);
+  font-size: 18px;
+}
+
+.shipping-info-main i {
+  margin-right: 8px; /* Adjust the spacing between icon and text */
+}
+.shipping-info .continue-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 30px 10px 30px;
+}
+.shipping-info .continue-btn button {
+  background: #ff004d;
+  color: #fff;
+  padding: 5px;
+  width: 40%;
+}
+/* Existing styles */
+
+.continue-btn button {
+  background: #ff004d;
+  color: #fff;
+  padding: 6px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.continue-btn button.disabled {
+  background: #ddd; 
+  color: #888;
+  cursor: not-allowed; 
+  opacity: 0.6;
+}
+
+
+.continue-btn button:not(.disabled):hover {
+  background: #e6003c;
+}
+
+
+@media (max-width: 768px) {
+  .shipping-info {
+    width: 95%;
+    padding-bottom: 10px;
+  }
+
+  .checkout-stepper {
+    margin: 10px auto;
+    width: 100%;
+    padding: 0px;
+    font-size: 10px;
+  }
+
+  .shipping-info-top {
+    padding: 13px;
+  }
+  .shipping-info-top h1 {
+    font-size: 18px;
+  }
+  .shipping-info-top button {
+    width: 70px;
+  }
+
+  .shipping-info-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .shipping-info .continue-btn {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+  }
+  .shipping-info .continue-btn button {
+    width: 90%;
+    margin-top: 20px;
+  }
+}

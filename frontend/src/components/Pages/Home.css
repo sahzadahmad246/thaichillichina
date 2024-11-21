@@ -1,0 +1,256 @@
+.quick-location {
+  display: none;
+}
+.quick-cart {
+  width: 90%;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-around;
+}
+.delivery-status {
+  border: 1px solid #dddd;
+  padding: 13px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  width: 40%;
+}
+
+.outlet-status {
+  display: none;
+}
+
+.homeBanner {
+  display: none;
+}
+
+.categories-box {
+  padding: 10px;
+  display: flex;
+  margin: 20px 0px;
+  justify-content: space-around;
+}
+
+.category-item {
+  width: 180px;
+  height: 180px;
+  padding: 15px;
+  background: #f7f7f7;
+  border-radius: 19px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.category-image {
+  padding: 6px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.category-image img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.food-type-icon {
+  width: 1110px;
+}
+
+.random-products {
+  padding: 20px;
+  background-color: #f9f9f9;
+  overflow-x: auto;
+  white-space: nowrap;
+
+  padding: 10px;
+}
+
+.product-grid {
+  display: flex;
+  gap: 15px;
+}
+
+.product-card {
+  flex: 0 0 auto;
+  width: 210px;
+
+  background: #f6f8fc;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: center;
+  padding: 10px;
+  margin: 0px 10px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.product-card h3 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.product-card p {
+  color: #555;
+}
+.random-add-btn {
+  margin: 0;
+  padding: 0 1rem;
+  color: #fff;
+  height: 2rem;
+}
+.product-row {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.product-row::-webkit-scrollbar {
+  height: 0px;
+}
+.product-row::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+@media only screen and (max-width: 767px) {
+  .mobile-top {
+    background: linear-gradient(to bottom, rgb(252, 248, 247), #fcd8d6);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    padding: 10px 0px;
+  }
+  .quick-status {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+   
+  }
+
+  .quick-cart {
+    margin: 10px auto;
+    padding: 10px 0.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .delivery-status {
+    margin-bottom: 15px;
+    width: unset;
+  }
+  .d-flex.flex-row {
+    margin: 10px 0;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .search-box input {
+    width: 85%;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .search-box span {
+    color: #888;
+  }
+
+  .homeBanner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .homeBanner img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .categories-box {
+    margin: 20px auto;
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 98%;
+    max-width: 540px;
+  }
+
+  .category-item {
+    min-width: 150px;
+    height: auto;
+    padding: 15px;
+    background: #f7f7f7;
+    border-radius: 19px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #ddd;
+    scroll-snap-align: start;
+  }
+
+  .category-image {
+    padding: 6px;
+    width: 100px;
+    height: auto;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  .category-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* border-radius: 50%; */
+  }
+
+  .categories-box::-webkit-scrollbar {
+    height: 0px;
+  }
+  .categories-box::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+  }
+
+  .quick-location {
+    display: flex;
+    align-items: center;
+  }
+  .outlet-status {
+    display: unset;
+  }
+  .location-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+  }
+  .mobile-search {
+    margin: 1rem 0.5rem;
+  }
+}

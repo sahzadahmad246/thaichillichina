@@ -1,0 +1,139 @@
+.live-order-top {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.live-order-top-1 {
+  display: flex;
+  width: 60%;
+  justify-content: space-around;
+  align-items: center;
+}
+.live-order-top-1 span {
+  border: 1px solid #7c7c7c;
+  padding: 3px 15px;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.live-order-top-2 {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 3px 5px;
+  width: 30%;
+  border-radius: 7px;
+}
+
+.live-order-box {
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  margin: 30px auto;
+  width: 70%;
+  padding: 0px;
+}
+.live-order-box-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9fb;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 10px 20px;
+}
+.live-order-box-1-1 {
+  display: flex;
+  align-items: center;
+}
+.live-order-box-1-1 img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.live-order-box-2 {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+.live-order-box-2-left {
+  width: 40%;
+  padding: 0px 10px;
+
+  border-right: 1px rgb(211, 209, 209) dashed;
+}
+.live-order-box-2-left span{
+  font-size: 14px;
+}
+.live-order-box-2-right {
+  width: 60%;
+  padding: 0px 10px;
+}
+.live-order-box-2 .live-order-item {
+  text-decoration: none;
+  margin: 10px auto;
+  width: 90%;
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.live-order-box-2-right-1 {
+  padding: 5px 10px;
+  margin: 20px;
+}
+
+.order-ready-btn {
+  margin: 10px 20px;
+  display: flex;
+  justify-content: center;
+}
+.order-ready-btn button {
+  width: 100%;
+  padding: 5px;
+}
+
+.active-status {
+  color: #fff;
+  background: #ff004d;
+  border: none;
+}
+
+.showBill {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showBill .modelContent {
+  width: 70%;
+}
+
+.showBill button {
+  position: absolute;
+  /* background-color: #fff ; */
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* border-radius: 50%; */
+  padding: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+}

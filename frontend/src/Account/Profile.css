@@ -1,0 +1,182 @@
+.profile-container{
+  display: flex;
+  margin: 10px 0px;
+}
+.profile-left{
+  margin: 10px 20px;
+  width: 20%;
+  
+}
+.profile-cover {
+  height: 200px;
+  background: #4c516d;
+}
+.pic-edit {
+  display: flex;
+  height: 90px;
+  justify-content: space-between;
+}
+.pic-edit img {
+  width: 150px;
+  object-fit: cover;
+  height: 150px;
+  position: relative;
+  left: 60px;
+  bottom: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+.pic-edit button {
+  position: relative;
+  right: 50px;
+  top: 20px;
+  border: 1px solid #ff004d;
+  padding: 0px 20px;
+  height: 30px;
+  border-radius: 17px;
+  text-align: center;
+  color: #ff004d;
+}
+.profile-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.profile-info p {
+  padding: 6px;
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  width: 400px;
+  margin: 0px auto;
+  cursor: default;
+}
+
+.update-profile-image {
+  border: 1px solid #ddd;
+  width: 50%;
+  margin: 10px auto;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: ease all 0.5s;
+  align-items: center;
+}
+.update-profile-image img{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.file-input-wrapper {
+  display: flex;
+}
+.update-profile-image button {
+  background: #ff004d;
+  color: #fff;
+  width: 25%;
+  height: 30px;
+  border-radius: 17px;
+}
+.profile-right{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 78%;
+  margin: 10px 0px;
+  border: 1px solid #ddd;
+
+}
+.profile-main{
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .profile-container{
+
+    margin: 0px 0px;
+  }
+  .profile-cover {
+    height: 150px;
+    background: #4c516d;
+    width: 100%;
+  }
+  .profile-left{
+   display: none;
+  }
+
+  .profile-right{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px 0px;
+
+  }
+  .pic-edit {
+    display: flex;
+    height: 90px;
+    justify-content: space-between;
+  }
+  .pic-edit img {
+    width: 100px;
+    object-fit: cover;
+    height: 100px;
+    position: relative;
+    left: 10px;
+    bottom: 56px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+  }
+  .pic-edit button {
+    position: relative;
+    right: 10px;
+    top: 20px;
+    padding: 0px 10px;
+    height: 30px;
+    border-radius: 17px;
+    text-align: center;
+    color: #ff004d;
+  }
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 0px;
+  }
+
+  .profile-info p {
+    padding: 6px;
+    /* border: 1px solid #ccc; */
+    border-radius: 8px;
+    width: 100%;
+    margin: 0px auto;
+    cursor: default;
+    font-size: 17px;
+  }
+
+  .update-profile-image {
+    border: 1px solid #ddd;
+    width: 90%;
+    padding: 15px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: ease all 0.5s;
+    align-items: center;
+  }
+  .file-input-wrapper {
+    display: flex;
+    font-size: 10px;
+  }
+  .update-profile-image button {
+    background: #ff004d;
+    color: #fff;
+    width: 25%;
+    height: 30px;
+    border-radius: 17px;
+  }
+}

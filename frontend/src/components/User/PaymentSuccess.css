@@ -1,0 +1,29 @@
+.paymentSuccess-main{
+    height: 89vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.paymentSuccess-main p{
+    font-size: 30px;
+}
+.paymentSuccess-main a{
+    border: 1px solid red;
+    padding: 5px 15px;
+    margin: 10px;
+    background: #ff004d;
+    color: #fff;
+}
+@media (max-width: 768px) {
+    .paymentSuccess-main{
+        height: 89vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .paymentSuccess-main p{
+        font-size: 24px;
+    }
+}

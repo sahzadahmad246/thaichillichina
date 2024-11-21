@@ -1,0 +1,155 @@
+.account-main {
+  width: 100%;
+  min-height: 87vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.account-main p {
+  font-size: 18px;
+  color: rgb(105, 106, 114);
+}
+
+.account-main a {
+  background: #ff004d;
+  border-radius: 7px;
+  margin: 10px;
+  padding: 5px;
+  width: 250px;
+  color: #fff;
+  text-align: center;
+}
+
+.authed-account {
+  width: 100%;
+  min-height: 85vh;
+}
+
+.authed-account .account {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 0px;
+}
+
+.account-top {
+  display: none;
+}
+
+.account-left .left-item {
+  display: flex;
+  align-items: center;
+  margin: 20px 0px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+.account-left a {
+  background: #fff;
+  color: #000;
+  width: 215px;
+  font-size: 19px;
+}
+
+.account-left .left-item i,
+p {
+  padding: 5px 10px;
+  font-size: 18px;
+}
+
+.account-left .logout {
+  margin: 20px 0px;
+  padding: 5px;
+  color: #ff004d;
+  cursor: pointer;
+}
+
+.left-item.active {
+  background-color: #fde3eb;
+}
+
+.account .account-right {
+  width: 78%;
+  border: 1px solid #ddd;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .account-main {
+    flex-direction: column;
+    min-height: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .account-main a {
+    width: 80%;
+    border-radius: 0px;
+  }
+
+  .authed-account {
+    padding: 0px 0px;
+
+    margin: 0;
+  }
+
+  .account-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 0px;
+    padding: 5px;
+    background: #ecf0f3;
+    color: #000;
+    width: 100%;
+  }
+
+  .account-top img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .authed-account .account {
+    flex-direction: column;
+    justify-content: start;
+    margin: 0px 0px;
+  }
+
+  .account .account-left {
+    width: 100%;
+  }
+
+  .account-left .left-item {
+    display: flex;
+    align-items: center;
+    margin: 20px 0px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    color: #000;
+  }
+
+  .account-left .left-item i,
+  p {
+    padding: 5px 10px;
+    font-size: 23px;
+  }
+
+  .account-left .logout {
+    margin: 20px 0px;
+    padding: 5px;
+    color: #ff004d;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .active-item {
+    background-color: #fde3eb;
+  }
+}

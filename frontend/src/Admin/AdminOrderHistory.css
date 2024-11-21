@@ -1,0 +1,33 @@
+.order-history-filters {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: #fff;
+}
+
+.filter-buttons {
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.4rem;
+}
+.filter-buttons button {
+  border: 1px solid #ddd;
+  padding: 2px 15px;
+  border-radius: 17px;
+}
+
+.order-history-filters .search-box {
+  /* border: 1px solid red; */
+  width: 25%;
+  pad: 2px;
+}
+
+.filter-buttons button.active-filter {
+  background-color: rgb(244 63 94);
+  color: white;
+}

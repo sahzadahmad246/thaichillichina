@@ -1,0 +1,45 @@
+.reviewBlock-1 {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.reviewBlock-1 img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+.reviewBlock-1 p {
+  font-size: 30px;
+  color: #2d1f30;
+  font-weight: 600;
+}
+.reviewBlock-2{
+margin-left: 48px;
+}
+
+
+@media (max-width: 768px) {
+    .reviewBlock-1 {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .reviewBlock-1 img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        margin-right: 10px;
+        border-radius: 50%;
+      }
+      .reviewBlock-1 p {
+        font-size: 20px;
+        color: #2d1f30;
+        font-weight: 600;
+      }
+      .reviewBlock-2{
+      margin-left: 48px;
+      }
+          
+}
