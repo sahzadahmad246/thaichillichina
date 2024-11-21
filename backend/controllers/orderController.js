@@ -252,11 +252,11 @@ exports.paymentVerification = catchAsyncErrors(async (req, res, next) => {
       { expiresIn: "12m" }
     );
     return res.redirect(
-      `http://localhost:5000/success?reference=${razorpay_payment_id}&status=success&token=${token}`
+      `https://thaichillichina.onrender.com/success?reference=${razorpay_payment_id}&status=success&token=${token}`
     );
   } else {
     return res.redirect(
-      `http://localhost:5000/paymentfailure?status=failure`
+      `https://thaichillichina.onrender.com/paymentfailure?status=failure`
     );
   }
 });

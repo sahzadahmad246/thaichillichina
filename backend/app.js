@@ -22,7 +22,7 @@ app.use(
 
 // CORS setup (optional, you can adjust based on your environment)
 const corsOptions = {
-  origin: ["https://resfront.onrender.com", "http://localhost:5000"],
+  origin: [ "http://localhost:5000"],
   methods: "GET, POST, PUT, DELETE, HEAD, FETCH",
   credentials: true,
 };
