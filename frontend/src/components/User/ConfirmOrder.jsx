@@ -150,7 +150,7 @@ export default function ConfirmOrder() {
       </div>
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-8">
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-lg border">
             <h2 className="text-1xl font-bold mb-4">Delivering to</h2>
             <div className="space-y-2 d-flex flex-col">
               <span>
@@ -201,7 +201,7 @@ export default function ConfirmOrder() {
               {instruction ? "Edit Instructions" : "Add Instructions"}
             </Button>
           </Paper>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-lg border">
             <h2 className="text-1xl font-bold mb-4">Items in your cart</h2>
             <div className="space-y-4">
               {cartItems.map((item) => (
@@ -231,7 +231,7 @@ export default function ConfirmOrder() {
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg border">
           <h2 className="text-1xl font-bold mb-6">Price Details</h2>
           <div className="space-y-4">
             <div className="flex justify-between">

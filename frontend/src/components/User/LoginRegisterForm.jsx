@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, CircularProgress } from "@mui/material";
-import "./LoginRegisterForm.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register, clearErrors } from "../../actions/userAction";
 import { toast } from "react-hot-toast";
+import { User, Mail, Phone, Lock, Loader2 } from 'lucide-react';
 
 const LoginRegisterForm = () => {
   const { error, loading, isAuthenticated } = useSelector(
@@ -14,7 +13,7 @@ const LoginRegisterForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [toastShown, setToastShown] = useState(false); // Flag for toast message
+  const [toastShown, setToastShown] = useState(false);
 
   const switchForm = () => {
     setIsLogin(!isLogin);
@@ -63,146 +62,130 @@ const LoginRegisterForm = () => {
   };
 
   return (
-    <div className="main-login">
-           {" "}
-      <div className="form-container">
-               {" "}
-        <div className="slider-container">
-                   {" "}
-          <div
-            className={`slider ${isLogin ? "slide-left" : "slide-right"}`}
-          ></div>
-                   {" "}
-          <h2
-            className={`login-register-header ${
-              isLogin ? "slide-left" : "slide-right"
-            }`}
-          >
-                        {isLogin ? "Login" : "Register"}         {" "}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white p-3 sm:p-10 rounded-xl border">
+        <div>
+          <h2 className="mt-6 text-center text-2xl font-extrabold text-gray-900">
+            {isLogin ? "Login " : "Create account"}
           </h2>
-                 {" "}
         </div>
-               {" "}
-        <form
-          onSubmit={isLogin ? handleLoginSubmit : handleRegisterSubmit}
-          className={`form ${isLogin ? "slide-left" : "slide-right"}`}
-        >
-                   {" "}
-          {!isLogin && (
-            <>
-                           {" "}
-              <TextField
-                id="register-name"
-                name="register-name"
-                label="Name"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Enter your name"
-              />
-                           {" "}
-              <TextField
-                id="register-email"
-                name="register-email"
-                label="Email"
-                type="email"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Enter your email"
-              />
-                           {" "}
-              <TextField
-                id="register-phone"
-                name="register-phone"
-                label="Phone"
-                type="tel"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Enter your phone number"
-              />
-                           {" "}
-              <TextField
-                id="register-password"
-                name="register-password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Set a password"
-              />
-                         {" "}
-            </>
-          )}
-                   {" "}
+        <form className="mt-8 space-y-6" onSubmit={isLogin ? handleLoginSubmit : handleRegisterSubmit}>
+          <input type="hidden" name="remember" defaultValue="true" />
+          <div className="rounded-md  -space-y-px">
+            {!isLogin && (
+              <>
+                <div className="mb-4">
+                  <label htmlFor="register-name" className="sr-only">
+                    Name
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      id="register-name"
+                      name="register-name"
+                      type="text"
+                      required
+                      className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Name"
+                    />
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="register-email" className="sr-only">
+                    Email address
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <Mail className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      id="register-email"
+                      name="register-email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                      placeholder="Email address"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="mb-4">
+              <label htmlFor={isLogin ? "login-phone" : "register-phone"} className="sr-only">
+                Phone number
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Phone className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id={isLogin ? "login-phone" : "register-phone"}
+                  name={isLogin ? "login-phone" : "register-phone"}
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Phone number"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor={isLogin ? "login-password" : "register-password"} className="sr-only">
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id={isLogin ? "login-password" : "register-password"}
+                  name={isLogin ? "login-password" : "register-password"}
+                  type="password"
+                  autoComplete={isLogin ? "current-password" : "new-password"}
+                  required
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 pl-10 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                />
+              </div>
+            </div>
+          </div>
+
           {isLogin && (
-            <>
-                           {" "}
-              <TextField
-                id="login-phone"
-                name="login-phone"
-                label="Phone"
-                type="tel"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Enter your phone number"
-              />
-                           {" "}
-              <TextField
-                id="login-password"
-                name="login-password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                required
-                fullWidth
-                margin="normal"
-                placeholder="Enter your password"
-              />
-                           {" "}
-              <Link to="/password/forgot" className="p-1 text-right">
-                                Forgot Password?              {" "}
-              </Link>
-                         {" "}
-            </>
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <Link to="/password/forgot" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Forgot your password?
+                </Link>
+              </div>
+            </div>
           )}
-                   {" "}
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className="mt-3 p-2"
-            disableElevation
-            disabled={loading}
-            endIcon={loading && <CircularProgress size={20} color="inherit" />}
-          >
-                        {isLogin ? "Login" : "Register"}         {" "}
-          </Button>
-                 {" "}
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              {loading ? (
+                <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+              ) : null}
+              {isLogin ? "Sign in" : "Register"}
+            </button>
+          </div>
         </form>
-               {" "}
-        <div className="button-box">
-                   {" "}
-          <Button onClick={switchForm} variant="text" color="secondary">
-                       {" "}
-            {isLogin ? "Not an account? Register" : "Already registered? Login"}
-                     {" "}
-          </Button>
-                 {" "}
+
+        <div className="mt-6">
+          <button onClick={switchForm} className="w-full text-center text-sm text-indigo-600 hover:text-indigo-500">
+            {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+          </button>
         </div>
-             {" "}
       </div>
-         {" "}
     </div>
   );
 };
 
 export default LoginRegisterForm;
+
