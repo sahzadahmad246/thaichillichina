@@ -176,7 +176,7 @@ const Home = () => {
     <div className="pb-20">
       <MetaData title="Thai Chilli China" />
 
-      <div className=" mobile-top bg-gradient-to-b from-[#FCF8F7] to-[#FCD8D6] relative w-full z-50 py-2">
+      <div className="quick-location bg-gradient-to-b from-[#FCF8F7] to-[#FCD8D6] relative w-full z-50 py-2">
         {address && (
           <div className="flex justify-between items-center px-2">
             <div className="flex items-center">
