@@ -1,106 +1,160 @@
 import React from "react";
 import { format, isValid } from "date-fns";
-import "./OrderStatusStepper.css";
-import { IoMdCheckmark, IoMdClose } from "react-icons/io"; // Import IoMdClose
+import { CheckCircle2, XCircle } from "lucide-react";
 
 const OrderStatusStepper = ({ statusHistory, createdAt }) => {
+  
+
   const steps = [
-    { label: "Placed", status: "Placed" },
     { label: "Accepted", status: "Accepted" },
     { label: "Ready", status: "Ready" },
     { label: "On the way", status: "On the way" },
     { label: "Delivered", status: "Delivered" },
-    { label: "Rejected", status: "Rejected" },
-    { label: "cancelled", status: "cancelled" }, // Keep this in lowercase
   ];
 
-  let filteredSteps = [];
-
-  const statusLabels = statusHistory?.map((status) => status.status);
-
-  // Check for "Rejected"
-  if (statusLabels?.includes("Rejected")) {
-    // Filter to show only "Placed" and "Rejected"
-    filteredSteps = steps.filter(
-      (step) => step.status === "Placed" || step.status === "Rejected"
+  const getStepStatus = (step) => {
+    const stepStatus = statusHistory?.find(
+      (status) => status.status === step.status
     );
-  }
-  // Check for "cancelled"
-  else if (statusLabels?.includes("cancelled")) {
-    const cancelledIndex = statusLabels.indexOf("cancelled");
-    filteredSteps = steps.filter(
-      (step) =>
-        statusLabels.indexOf(step.status) !== -1 &&
-        statusLabels.indexOf(step.status) <= cancelledIndex
-    );
-  }
-  // If there are no "Rejected" or "cancelled", display all steps
-  else {
-    filteredSteps = steps.filter((step) => statusLabels?.includes(step.status));
-  }
+    if (stepStatus) {
+      return {
+        isCompleted: true,
+        timestamp: new Date(stepStatus.timestamp),
+      };
+    }
+    return { isCompleted: false, timestamp: null };
+  };
 
-  // Ensure 'Placed' step is always completed
-  const completedSteps = ["Placed"];
+  const isOrderCancelledOrRejected = statusHistory?.some(
+    (status) => status.status === "cancelled" || status.status === "Rejected"
+  );
+
+  const filteredSteps = statusHistory?.reduce((acc, status, index) => {
+    if (status.status === "cancelled" || status.status === "Rejected") {
+      return statusHistory.slice(0, index + 1).map((s) => ({
+        label: s.status,
+        status: s.status,
+        timestamp: s.timestamp,
+      }));
+    }
+    return acc;
+  }, steps);
+
+  const finalSteps = isOrderCancelledOrRejected ? filteredSteps : steps;
 
   return (
-    <div className="status-stepper">
-      {filteredSteps?.map((step, index) => {
-        const stepStatus = statusHistory?.find(
-          (status) => status.status === step.status
-        );
-        const isActive =
-          completedSteps?.includes(step.status) ||
-          (stepStatus && stepStatus.status === step.status);
+    <div className="py-2">
 
-        const createdAtDate = new Date(createdAt);
-        const stepStatusDate = stepStatus
-          ? new Date(stepStatus.timestamp)
-          : null;
+      {/* Mobile View */}
+      <div className="sm:hidden">
+        <div className="relative">
+          {finalSteps.map((step, index) => {
+            const { isCompleted, timestamp } = getStepStatus(step);
+            const isLastStep = index === finalSteps.length - 1;
+            const isCancelOrReject =
+              step.status === "cancelled" || step.status === "Rejected";
 
-        return (
-          <div key={index} className={`step ${isActive ? "active" : ""}`}>
-            <div className="step-completion">
-              {isActive ? (
-                <div
-                  className={`icon-container ${
-                    step.status === "Rejected" || step.status === "cancelled"
-                      ? "red-background" // Red background for cross mark
-                      : "green-background" // Green background for check mark
-                  }`}
-                >
-                  {step.status === "Rejected" || step.status === "cancelled" ? (
-                    <IoMdClose size={20} color="white" /> // Display cross mark for rejected or cancelled
-                  ) : (
-                    <IoMdCheckmark size={20} color="white" /> // Display check mark for completed steps
+            return (
+              <div key={step.status} className="flex items-start mb-6 last:mb-0">
+                <div className="relative flex flex-col items-center">
+                  <div className="w-6 h-6 flex items-center justify-center z-10 bg-white">
+                    {isCompleted ? (
+                      isCancelOrReject ? (
+                        <XCircle className="w-6 h-6 text-red-500" />
+                      ) : (
+                        <CheckCircle2 className="w-6 h-6 text-green-500" />
+                      )
+                    ) : (
+                      <div className="w-3 h-3 rounded-full bg-gray-300" />
+                    )}
+                  </div>
+                  {!isLastStep && (
+                    <div 
+                      className="absolute left-1/2 top-6 w-0.5 h-[calc(100%+1.5rem)] -translate-x-1/2"
+                      style={{
+                        background: isCompleted
+                          ? isCancelOrReject
+                            ? "#EF4444"
+                            : "#10B981"
+                          : "#D1D5DB"
+                      }}
+                    />
                   )}
                 </div>
-              ) : (
-                index + 1
-              )}
-            </div>
-            <div className="step-details">
-              <div className="step-title">
-                <span>{step.label}</span>
-              </div>
-              {step.label === "Placed" && isValid(createdAtDate) && (
-                <div className="step-timestamp">
-                  {format(createdAtDate, "hh:mm a")}
+                <div className="ml-4">
+                  <p className="text-sm font-medium text-gray-900">
+                    {step.label}
+                  </p>
+                  {timestamp && (
+                    <p className="text-xs text-gray-500">
+                      {format(new Date(timestamp), "hh:mm a")}
+                    </p>
+                  )}
                 </div>
-              )}
-              {stepStatus &&
-                step.label !== "Placed" &&
-                isValid(stepStatusDate) && (
-                  <div className="step-timestamp">
-                    {format(stepStatusDate, "hh:mm a")}
-                  </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden sm:block">
+        <div className="flex justify-between items-center max-w-3xl mx-auto">
+          {finalSteps.map((step, index) => {
+            const { isCompleted, timestamp } = getStepStatus(step);
+            const isLastStep = index === finalSteps.length - 1;
+            const isCancelOrReject =
+              step.status === "cancelled" || step.status === "Rejected";
+
+            return (
+              <div
+                key={step.status}
+                className="relative flex flex-col items-center flex-1"
+              >
+                <div className="w-6 h-6 flex items-center justify-center z-10 bg-white">
+                  {isCompleted ? (
+                    isCancelOrReject ? (
+                      <XCircle className="w-6 h-6 text-red-500" />
+                    ) : (
+                      <CheckCircle2 className="w-6 h-6 text-green-500" />
+                    )
+                  ) : (
+                    <div className="w-3 h-3 rounded-full bg-gray-300" />
+                  )}
+                </div>
+                <div className="mt-1 text-center">
+                  <p className="text-sm font-medium text-gray-900 p-0 m-0">
+                    {step.label}
+                  </p>
+                  {timestamp && (
+                    <span className="text-xs text-gray-500 m-0 p-0">
+                      {format(new Date(timestamp), "hh:mm a")}
+                    </span>
+                  )}
+                </div>
+                {!isLastStep && (
+                  <div
+                    className={`
+                    absolute top-3 left-1/2 w-full h-0.5
+                    ${
+                      isCompleted
+                        ? isCancelOrReject
+                          ? "bg-red-500"
+                          : "bg-green-500"
+                        : "bg-gray-300"
+                    }
+                  `}
+                    style={{ width: 'calc(100% - 12px)', left: '56%' }}
+                  />
                 )}
-            </div>
-            {index < filteredSteps.length - 1 && <div className="step-line" />}
-          </div>
-        );
-      })}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
 
 export default OrderStatusStepper;
+

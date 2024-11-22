@@ -20,6 +20,7 @@ import {
   AlertCircle,
   CreditCard,
   X,
+  ShoppingBag,
 } from "lucide-react";
 
 import Loader from "../components/Layout/Loader";
@@ -132,18 +133,18 @@ const OrderDetails = () => {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-100 min-h-screen">
       <MetaData title={`Order Id #${order?._id}`} />
-      <div className="max-w-7xl mx-auto p-0 sm:p-4">
-        <div className="bg-white">
-          <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto p-0 sm:p-6 sm:mt-2">
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-3  flex justify-between items-center">
             <button
               onClick={handleBack}
               className="text-white hover:text-gray-200 transition-colors"
             >
               <ArrowLeft size={24} />
             </button>
-            <h1 className="text-white text-xl ">Order Details</h1>
+            <h1 className="text-white text-xl font-semibold">Order Details</h1>
             <button
               onClick={() => (window.location.href = `tel:${outlet.altPhone}`)}
               className="text-white hover:text-gray-200 transition-colors"
@@ -152,57 +153,58 @@ const OrderDetails = () => {
             </button>
           </div>
 
-          <div className="p-6 flex flex-col md:flex-row">
-            <div className="md:w-2/3 md:pr-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <InfoCard
-                  icon={<Box size={20} />}
-                  title="Order ID"
-                  content={`#${order?._id}`}
-                />
-                <InfoCard
-                  icon={<Clock size={20} />}
-                  title="Order placed at"
-                  content={formatDate(order?.createdAt)}
-                />
-                <InfoCard
-                  icon={getStatusIcon(order?.orderStatus)}
-                  title="Order Status"
-                  content={getStatusMessage(order?.orderStatus)}
-                  statusColor={
-                    order?.orderStatus === "Delivered"
-                      ? "text-green-600"
-                      : order?.orderStatus === "Rejected" ||
-                        order?.orderStatus === "cancelled"
-                      ? "text-red-600"
-                      : "text-yellow-600"
-                  }
-                />
-                <InfoCard
-                  icon={<MapPin size={20} />}
-                  title={
-                    order?.orderStatus === "Delivered"
-                      ? "Delivered to"
-                      : "Delivering to"
-                  }
-                  content={`${order?.deliveryInfo?.address}, ${order?.deliveryInfo?.city}, ${order?.deliveryInfo?.pincode}`}
-                />
-                <InfoCard
-                  icon={<CreditCard size={20} />}
-                  title="Payment"
-                  content={order?.paymentInfo?.status || "N/A"}
-                />
-              </div>
+          <div className="p-3 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-6 ">
+            <div className="md:col-span-2 space-y-6 ">
+              <InfoBox title="Order Information" className="border">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <InfoCard
+                    icon={<Box size={20} />}
+                    title="Order ID"
+                    content={`#${order?._id}`}
+                  />
+                  <InfoCard
+                    icon={<Clock size={20} />}
+                    title="Order placed at"
+                    content={formatDate(order?.createdAt)}
+                  />
+                  <InfoCard
+                    icon={getStatusIcon(order?.orderStatus)}
+                    title="Order Status"
+                    content={getStatusMessage(order?.orderStatus)}
+                    statusColor={
+                      order?.orderStatus === "Delivered"
+                        ? "text-green-600"
+                        : order?.orderStatus === "Rejected" ||
+                          order?.orderStatus === "cancelled"
+                        ? "text-red-600"
+                        : "text-yellow-600"
+                    }
+                  />
+                  <InfoCard
+                    icon={<MapPin size={20} />}
+                    title={
+                      order?.orderStatus === "Delivered"
+                        ? "Delivered to"
+                        : "Delivering to"
+                    }
+                    content={`${order?.deliveryInfo?.address}, ${order?.deliveryInfo?.city}, ${order?.deliveryInfo?.pincode}`}
+                  />
+                  <InfoCard
+                    icon={<CreditCard size={20} />}
+                    title="Payment"
+                    content={order?.paymentInfo?.status || "N/A"}
+                  />
+                </div>
+              </InfoBox>
 
-              <OrderStatusStepper
-                statusHistory={order.statusHistory}
-                createdAt={order.createdAt}
-              />
+              <InfoBox title="Order Timeline">
+                <OrderStatusStepper
+                  statusHistory={order.statusHistory}
+                  createdAt={order.createdAt}
+                />
+              </InfoBox>
 
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold mb-4">
-                  Items you ordered
-                </h2>
+              <InfoBox title="Items you ordered">
                 <ul className="divide-y divide-gray-200">
                   {order?.orderItems &&
                     order.orderItems.map((item) => (
@@ -230,12 +232,11 @@ const OrderDetails = () => {
                       </motion.li>
                     ))}
                 </ul>
-              </div>
+              </InfoBox>
             </div>
 
-            <div className="md:w-1/3 mt-6 md:mt-0">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h2 className="text-lg font-semibold mb-4">Payment Info</h2>
+            <div className="space-y-6">
+              <PaymentInfoBox title="Payment Info">
                 <div className="space-y-2">
                   <PaymentInfoRow label="GST" amount={order?.taxPrice} />
                   <PaymentInfoRow
@@ -249,9 +250,9 @@ const OrderDetails = () => {
                     isBold
                   />
                 </div>
-              </div>
+              </PaymentInfoBox>
 
-              <div className="mt-6 flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4">
                 <PDFDownloadLink
                   document={<InvoicePDF order={order} outlet={outlet} />}
                   fileName={`invoice_${order._id}.pdf`}
@@ -325,12 +326,31 @@ const OrderDetails = () => {
   );
 };
 
+const InfoBox = ({ title, children }) => (
+  <div className="bg-white p-3 rounded-lg border border-red-700 ">
+    <h2 className="text-lg font-semibold mb-4 flex items-center">
+      <ShoppingBag className="mr-2 text-indigo-600" size={20} />
+      {title}
+    </h2>
+    {children}
+  </div>
+);
+const PaymentInfoBox = ({ title, children }) => (
+  <div className="bg-white p-3 rounded-lg border border-red-700 ">
+    <h2 className="text-lg font-semibold mb-4 flex items-center">
+      <CreditCard className="mr-2 text-indigo-600" size={20} />
+      {title}
+    </h2>
+    {children}
+  </div>
+);
+
 const InfoCard = ({ icon, title, content, statusColor }) => (
-  <div className="flex items-center space-x-3 ">
-    <div className="text-blue-500">{icon}</div>
+  <div className="flex items-center space-x-3">
+    <div className="text-indigo-600">{icon}</div>
     <div>
       <h3 className="text-xs font-medium text-gray-500">{title}</h3>
-      <p className={` p-0 text-sm  ${statusColor || "text-gray-900"}`}>
+      <p className={`p-0 text-sm ${statusColor || "text-gray-900"}`}>
         {content}
       </p>
     </div>

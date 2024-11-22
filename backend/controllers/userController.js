@@ -77,7 +77,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
   const resetPasswordUrl = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  )}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is:\n\n${resetPasswordUrl}\n\nBeware of hackers. Do not share OTP with anyone. If you have not requested this email, please ignore it.`;
 

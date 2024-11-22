@@ -4,9 +4,18 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import vegIcon from '../../images/veg-icon.png'
-import nonvegIcon from '../../images/non-veg-icon.png'
-import { Star, ShoppingCart, Heart, Minus, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import vegIcon from "../../images/veg-icon.png";
+import nonvegIcon from "../../images/non-veg-icon.png";
+import {
+  Star,
+  ShoppingCart,
+  Heart,
+  Minus,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
 import {
   getProductDetails,
   newReview,
@@ -17,13 +26,6 @@ import Loader from "../Layout/Loader";
 import ReviewCard from "./ReviewCard";
 import MetaData from "../Home/MetaData";
 import ProductDetailsError from "./ProductDetailsError";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
-import Rating from "@mui/material/Rating";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ const ProductDetails = () => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const [editReview, setEditReview] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { products, loading, error } = useSelector(
@@ -61,12 +62,7 @@ const ProductDetails = () => {
     setOpen(!open);
   };
 
-  const submitReview = () => {
-    const reviewData = {
-      productId: id,
-      comment,
-      rating,
-    };
+  const submitReview = (reviewData) => {
     setIsSubmitting(true);
     dispatch(newReview(reviewData));
   };
@@ -95,13 +91,6 @@ const ProductDetails = () => {
     }
   };
 
-  const openEditReviewDialog = (review) => {
-    setEditReview(review);
-    setComment(review.comment);
-    setRating(review.rating);
-    setOpen(true);
-  };
-
   useEffect(() => {
     if (orders) {
       const matchedOrder = orders.find((order) =>
@@ -124,11 +113,17 @@ const ProductDetails = () => {
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % (products?.images?.length || 1));
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex + 1) % (products?.images?.length || 1)
+    );
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + (products?.images?.length || 1)) % (products?.images?.length || 1));
+    setCurrentImageIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + (products?.images?.length || 1)) %
+        (products?.images?.length || 1)
+    );
   };
 
   return (
@@ -141,7 +136,7 @@ const ProductDetails = () => {
       ) : (
         <div className="flex flex-col lg:flex-row">
           {/* Image Carousel */}
-          <motion.div 
+          <motion.div
             className="w-full lg:w-1/2 h-[50vh] lg:h-[70vh] lg:sticky lg:top-0"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -149,19 +144,19 @@ const ProductDetails = () => {
           >
             {products && products.images && (
               <div className="relative h-full">
-                <img 
-                  src={products.images[currentImageIndex].url} 
-                  alt={products.name} 
+                <img
+                  src={products.images[currentImageIndex].url}
+                  alt={products.name}
                   className="w-full h-full object-cover lg:object-contain"
                 />
-                <button 
-                  onClick={prevImage} 
+                <button
+                  onClick={prevImage}
                   className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-1 lg:p-2 transition-all duration-300"
                 >
                   <ChevronLeft className="w-4 h-4 lg:w-6 lg:h-6" />
                 </button>
-                <button 
-                  onClick={nextImage} 
+                <button
+                  onClick={nextImage}
                   className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 rounded-full p-1 lg:p-2 transition-all duration-300"
                 >
                   <ChevronRight className="w-4 h-4 lg:w-6 lg:h-6" />
@@ -171,7 +166,7 @@ const ProductDetails = () => {
           </motion.div>
 
           {/* Product Details and Reviews */}
-          <motion.div 
+          <motion.div
             className="w-full lg:w-1/2 bg-white p-4 lg:p-12 overflow-y-auto"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -181,53 +176,71 @@ const ProductDetails = () => {
               {products && products.name}
               {products && products.foodType && (
                 <span className="ml-2">
-                  <img 
-                    src={products.foodType === "Veg" ? vegIcon : nonvegIcon} 
-                    alt={products.foodType} 
+                  <img
+                    src={products.foodType === "Veg" ? vegIcon : nonvegIcon}
+                    alt={products.foodType}
                     className="inline-block w-4 h-4 lg:w-6 lg:h-6"
                   />
                 </span>
               )}
             </h1>
-            <p className="text-sm lg:text-xl text-gray-600 mb-3 lg:mb-6">{products && products.description}</p>
+            <p className="text-sm lg:text-xl text-gray-600 mb-3 lg:mb-6">
+              {products && products.description}
+            </p>
             <div className="flex items-center mb-3 lg:mb-6">
-              <span className="text-xl lg:text-3xl font-bold mr-2 lg:mr-4">₹{products && products.price}</span>
-              <span className={`px-2 py-1 rounded-full text-xs lg:text-sm font-semibold ${products && products.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                {products && products.stock > 0 ? 'In Stock' : 'Out of Stock'}
+              <span className="text-xl lg:text-3xl font-bold mr-2 lg:mr-4">
+                ₹{products && products.price}
+              </span>
+              <span
+                className={`px-2 py-1 rounded-full text-xs lg:text-sm font-semibold ${
+                  products && products.stock > 0
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {products && products.stock > 0 ? "In Stock" : "Out of Stock"}
               </span>
             </div>
             <div className="flex items-center mb-3 lg:mb-6">
-              <Rating
-                name="read-only-rating"
-                value={products && products.ratings}
-                readOnly
-                precision={0.5}
-                size="small"
-              />
-              <span className="ml-2 text-xs lg:text-sm text-gray-600">({products && products.numOfReviews} reviews)</span>
+              <div className="flex">
+                {[...Array(5)].map((_, index) => (
+                  <Star
+                    key={index}
+                    size={20}
+                    className={`${
+                      index < (products && products.ratings)
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="ml-2 text-xs lg:text-sm text-gray-600">
+                ({products && products.numOfReviews} reviews)
+              </span>
             </div>
             <div className="flex items-center mb-3 lg:mb-6">
-              <button 
-                onClick={decreaseQuantity} 
+              <button
+                onClick={decreaseQuantity}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 lg:py-2 lg:px-4 rounded-l transition-colors duration-300"
               >
                 <Minus className="w-3 h-3 lg:w-4 lg:h-4" />
               </button>
-              <input 
-                type="number" 
-                value={quantity} 
-                readOnly 
-                className="w-10 lg:w-16 text-center   text-sm lg:text-base"
+              <input
+                type="number"
+                value={quantity}
+                readOnly
+                className="w-10 lg:w-16 text-center border-t border-b border-gray-200 text-sm lg:text-base"
               />
-              <button 
-                onClick={increaseQuantity} 
+              <button
+                onClick={increaseQuantity}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 lg:py-2 lg:px-4 rounded-r transition-colors duration-300"
               >
                 <Plus className="w-3 h-3 lg:w-4 lg:h-4" />
               </button>
             </div>
             <div className="flex space-x-2 lg:space-x-4 mb-6 lg:mb-12">
-              <motion.button 
+              <motion.button
                 className={`flex-1 py-2 px-3 lg:py-3 lg:px-6 rounded-full text-sm lg:text-lg font-semibold transition duration-300 flex items-center justify-center ${
                   products && products.stock > 0
                     ? "bg-blue-600 text-white hover:bg-blue-700"
@@ -235,13 +248,17 @@ const ProductDetails = () => {
                 }`}
                 onClick={handleAddToCart}
                 disabled={products && products.stock <= 0}
-                whileHover={{ scale: products && products.stock > 0 ? 1.05 : 1 }}
+                whileHover={{
+                  scale: products && products.stock > 0 ? 1.05 : 1,
+                }}
                 whileTap={{ scale: products && products.stock > 0 ? 0.95 : 1 }}
               >
                 <ShoppingCart className="w-4 h-4 lg:w-5 lg:h-5 mr-1 lg:mr-2" />
-                {products && products.stock > 0 ? "Add to Cart" : "Out of Stock"}
+                {products && products.stock > 0
+                  ? "Add to Cart"
+                  : "Out of Stock"}
               </motion.button>
-              <motion.button 
+              <motion.button
                 className="flex-1 border-2 border-blue-600 text-blue-600 py-2 px-3 lg:py-3 lg:px-6 rounded-full text-sm lg:text-lg font-semibold hover:bg-blue-50 transition duration-300 flex items-center justify-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -253,73 +270,110 @@ const ProductDetails = () => {
 
             {/* Reviews Section */}
             <div className="border-t pt-4 lg:pt-8">
-              <h2 className="text-xl lg:text-3xl font-bold mb-3 lg:mb-6">Reviews</h2>
+              <h2 className="text-xl lg:text-3xl font-bold mb-3 lg:mb-6">
+                Reviews
+              </h2>
               {orderedProduct && (
-                <div className="mb-3 lg:mb-6 p-2 lg:p-4 bg-blue-50 rounded-lg">
-                  <p className="text-sm lg:text-lg">
-                    You ordered <strong>{orderedProduct.name}</strong> on{" "}
-                    <strong>{formatDate(orderedProduct.date)}</strong>.
-                  </p>
-                  <Button 
-                    onClick={submitReviewToggle} 
-                    variant="contained" 
-                    color="primary" 
-                    size="small"
-                    className="mt-2"
+                <div className="mb-3 lg:mb-6 p-2 lg:p-4 bg-blue-50 rounded-lg flex flex-row items-center justify-between border">
+                  <div className="text-xs sm:text-sm lg:text-base">
+                    <p className="text-sm ">
+                      You ordered{" "}
+                      <span className="text-gray ">
+                        {orderedProduct.name}
+                      </span>{" "}
+                      on{" "}
+                      <span className="">
+                        {formatDate(orderedProduct.date)}
+                      </span>
+                    </p>
+                  </div>
+                  <button
+                    onClick={submitReviewToggle}
+                    className="ml-2 px-2 py-1 lg:px-4 lg:py-2 bg-blue-500 text-white text-xs sm:text-sm lg:text-base font-medium rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
                   >
-                    Rate your experience
-                  </Button>
+                    Rate
+                  </button>
                 </div>
               )}
-              <Dialog
-                open={open}
-                onClose={submitReviewToggle}
-                aria-labelledby="review-dialog-title"
-                maxWidth="sm"
-                fullWidth
-              >
-                <DialogTitle id="review-dialog-title">Submit Review</DialogTitle>
-                <DialogContent>
-                  <div className="flex flex-col items-center">
-                    <Rating
-                      name="product-rating"
-                      value={rating}
-                      onChange={(event, newValue) => {
-                        setRating(newValue);
-                      }}
-                      size="large"
-                      className="mb-4"
-                    />
-                    <textarea
-                      className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      rows="5"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      placeholder="Write your review here..."
-                    ></textarea>
+
+              {open && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+                >
+                  <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                    <div className="flex justify-between items-center mb-4">
+                      <h2 className="text-xl font-semibold">Submit Review</h2>
+                      <button
+                        onClick={submitReviewToggle}
+                        className="text-gray-500 hover:text-gray-700"
+                      >
+                        <X size={24} />
+                      </button>
+                    </div>
+                    <div className="mb-4">
+                      <div className="flex mb-2">
+                        {[...Array(5)].map((_, index) => (
+                          <Star
+                            key={index}
+                            size={24}
+                            className={`cursor-pointer ${
+                              index < rating
+                                ? "text-yellow-400 fill-yellow-400"
+                                : "text-gray-300"
+                            }`}
+                            onClick={() => setRating(index + 1)}
+                          />
+                        ))}
+                      </div>
+                      <textarea
+                        className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        rows="4"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Write your review here..."
+                      ></textarea>
+                    </div>
+                    <div className="flex justify-end">
+                      <button
+                        onClick={submitReviewToggle}
+                        className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors mr-2"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() =>
+                          submitReview({ productId: id, comment, rating })
+                        }
+                        disabled={isSubmitting}
+                        className={`px-4 py-2 text-sm font-medium bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors ${
+                          isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        {isSubmitting ? "Submitting..." : "Submit"}
+                      </button>
+                    </div>
                   </div>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={submitReviewToggle} color="secondary">
-                    Cancel
-                  </Button>
-                  <Button onClick={submitReview} color="primary" disabled={isSubmitting}>
-                    {isSubmitting ? <CircularProgress size={24} /> : "Submit"}
-                  </Button>
-                </DialogActions>
-              </Dialog>
+                </motion.div>
+              )}
+
               {products && products.reviews && products.reviews.length > 0 ? (
-                <div className="space-y-3 lg:space-y-6">
+                <div className="space-y-3 lg:space-y-6 ">
                   {products.reviews.map((review) => (
                     <ReviewCard
                       key={review._id}
                       review={review}
-                      openEditReviewDialog={openEditReviewDialog}
+                      onEditReview={submitReview}
                     />
                   ))}
                 </div>
               ) : (
-                <p className="text-sm lg:text-xl text-gray-600">No Reviews Yet</p>
+                <p className="text-sm lg:text-xl text-gray-600 border flex justify-center bg-blue-50 rounded-lg p-3">
+                  No Reviews Yet
+                </p>
               )}
             </div>
           </motion.div>
@@ -330,4 +384,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-

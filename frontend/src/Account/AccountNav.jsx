@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { logout, clearErrors } from "../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { MdDashboard } from "react-icons/md";
 import { toast } from "react-hot-toast";
-import "../components/Pages/Account.css";
+import { LayoutDashboard, User, ShoppingBag, Lock, LogOut } from 'lucide-react';
+
 const AccountNav = () => {
   const { error, loading, user, isAuthenticated, token } = useSelector(
     (state) => state.user
@@ -29,55 +29,49 @@ const AccountNav = () => {
     toast.success("Logged out successfully");
   };
 
-  return (
-    <div className="account-left">
-      <>
-        {isAdmin && (
-          <NavLink
-            to="/admin/orders"
-            className={({ isActive }) =>
-              isActive ? "left-item active" : "left-item"
-            }
-          >
-            <MdDashboard />
-            <p>Dashboard</p>
-          </NavLink>
-        )}
-        <NavLink
-          to="/account/profile"
-          className={({ isActive }) =>
-            isActive ? "left-item active" : "left-item"
-          }
-        >
-          <i className="fa-solid fa-user"></i>
-          <p>Profile</p>
-        </NavLink>
-        <NavLink
-          to="/account/orders"
-          className={({ isActive }) =>
-            isActive ? "left-item active" : "left-item"
-          }
-        >
-          <i className="fa-solid fa-bag-shopping"></i>
-          <p>Orders</p>
-        </NavLink>
+  const NavItem = ({ to, icon: Icon, children }) => (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `flex items-center space-x-2 p-3 transition-colors duration-200 border-b border-gray-200 ${
+          isActive
+            ? "bg-indigo-100 text-indigo-700"
+            : "text-gray-700 hover:bg-gray-100"
+        }`
+      }
+    >
+      <Icon className="w-5 h-5" />
+      <span>{children}</span>
+    </NavLink>
+  );
 
-        <NavLink
-          to="/password/update"
-          className={({ isActive }) =>
-            isActive ? "left-item active" : "left-item"
-          }
-        >
-          <i className="fa-solid fa-lock"></i>
-          <p>Update Password</p>
-        </NavLink>
-        <div className="logout" onClick={handleLogout}>
-          <i className="fas fa-sign-out-alt p-2"></i>
-          Logout
-        </div>
-      </>
-    </div>
+  return (
+    <nav className="bg-white">
+      {isAdmin && (
+        <NavItem to="/admin/orders" icon={LayoutDashboard}>
+          Dashboard
+        </NavItem>
+      )}
+      <NavItem to="/account/profile" icon={User}>
+        Profile
+      </NavItem>
+      <NavItem to="/account/orders" icon={ShoppingBag}>
+        Orders
+      </NavItem>
+      <NavItem to="/password/update" icon={Lock}>
+        Update Password
+      </NavItem>
+      <button
+        onClick={handleLogout}
+        className="flex items-center space-x-2 w-full p-3 text-left text-red-600 hover:bg-red-50 transition-colors duration-200 border-b border-gray-200"
+      >
+        <LogOut className="w-5 h-5" />
+        <span>Logout</span>
+      </button>
+     
+    </nav>
   );
 };
 
 export default AccountNav;
+
