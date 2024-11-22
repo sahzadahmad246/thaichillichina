@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import "./Home.css";
-import homeBanner from "../../images/homeBanner.png";
-import vegIcon from "../../images/veg-icon.png";
-import nonVegIcon from "../../images/non-veg-icon.png";
 import { useSelector, useDispatch } from "react-redux";
-import Loader from "../Layout/Loader";
+import { CiLocationArrow1, CiUnlock, CiLock } from "react-icons/ci";
 import { toast } from "react-hot-toast";
+
 import { clearErrors, getProducts } from "../../actions/productAction";
 import { getOutletInfo } from "../../actions/adminAction";
 import { addItemsToCart } from "../../actions/cartAction";
+import { haversineDistance } from "../User/haversineDistance";
+
+import Loader from "../Layout/Loader";
 import QuickCart from "./QuickCart";
 import MetaData from "../Home/MetaData";
 import LocationPicker from "../User/LocationPicker";
-import { CiLocationArrow1, CiUnlock, CiLock } from "react-icons/ci";
-import { haversineDistance } from "../User/haversineDistance";
 import LastOrderProducts from "../Home/LastOrderProducts";
-import LiveOrder from "./../../Account/Liveorder";
+import LiveOrder from "../../Account/Liveorder";
 import Footer from "./Footer";
+
+import homeBanner from "../../images/homeBanner.png";
+import vegIcon from "../../images/veg-icon.png";
+import nonVegIcon from "../../images/non-veg-icon.png";
+
 const Home = () => {
   const dispatch = useDispatch();
   const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -28,22 +31,55 @@ const Home = () => {
   const { orders } = useSelector((state) => state.myOrders);
   const { isAuthenticated } = useSelector((state) => state.user);
   const { location, address } = useSelector((state) => state.location);
+
   const [timeLeft, setTimeLeft] = useState(null);
   const [isOvertime, setIsOvertime] = useState(false);
-  const [subCategories, setSubCategories] = useState([]);
-  const [randomProducts, setRandomProducts] = useState([]);
   const [deliveryAvailable, setDeliveryAvailable] = useState(true);
   const [showLiveOrder, setShowLiveOrder] = useState(false);
-  const [groupedProducts, setGroupedProducts] = useState({});
-  console.log(outlet);
-  const liveOrders = orders
-    ? orders.filter(
-        (order) =>
-          order.orderStatus !== "Delivered" &&
-          order.orderStatus !== "cancelled" &&
-          order.orderStatus !== "Rejected"
-      )
-    : [];
+  const [isSearchSticky, setIsSearchSticky] = useState(false);
+
+  const liveOrders = useMemo(() => 
+    orders ? orders.filter(
+      (order) =>
+        order.orderStatus !== "Delivered" &&
+        order.orderStatus !== "cancelled" &&
+        order.orderStatus !== "Rejected"
+    ) : [], [orders]
+  );
+
+  const subCategories = useMemo(() => {
+    if (!products) return [];
+    const subCategoryMap = {};
+    products.forEach((product) => {
+      if (!subCategoryMap[product.subCategory]) {
+        subCategoryMap[product.subCategory] = product;
+      }
+    });
+
+    return Object.keys(subCategoryMap)
+      .map((subCategory) => ({
+        name: subCategory,
+        imageUrl: subCategoryMap[subCategory].images[0]?.url || homeBanner,
+      }))
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 5);
+  }, [products]);
+
+  const randomProducts = useMemo(() => 
+    products ? [...products].sort(() => 0.5 - Math.random()).slice(0, 15) : [],
+    [products]
+  );
+
+  const groupedProducts = useMemo(() => 
+    products ? products.reduce((acc, product) => {
+      if (!acc[product.subCategory]) {
+        acc[product.subCategory] = [];
+      }
+      acc[product.subCategory].push(product);
+      return acc;
+    }, {}) : {},
+    [products]
+  );
 
   useEffect(() => {
     dispatch(getOutletInfo(outlet._id));
@@ -53,41 +89,6 @@ const Home = () => {
       dispatch(clearErrors());
     }
   }, [dispatch, outlet._id, error]);
-console.log(outlet)
-  useEffect(() => {
-    if (products) {
-      const subCategoryMap = {};
-      products.forEach((product) => {
-        if (!subCategoryMap[product.subCategory]) {
-          subCategoryMap[product.subCategory] = product;
-        }
-      });
-
-      const uniqueSubCategories = Object.keys(subCategoryMap).map(
-        (subCategory) => ({
-          name: subCategory,
-          imageUrl: subCategoryMap[subCategory].images[0]?.url || homeBanner,
-        })
-      );
-
-      const shuffledSubCategories = uniqueSubCategories.sort(
-        () => 0.5 - Math.random()
-      );
-      setSubCategories(shuffledSubCategories.slice(0, 5));
-
-      const shuffledProducts = [...products].sort(() => 0.5 - Math.random());
-      setRandomProducts(shuffledProducts.slice(0, 15));
-
-      const grouped = products.reduce((acc, product) => {
-        if (!acc[product.subCategory]) {
-          acc[product.subCategory] = [];
-        }
-        acc[product.subCategory].push(product);
-        return acc;
-      }, {});
-      setGroupedProducts(grouped);
-    }
-  }, [products]);
 
   useEffect(() => {
     if (location && outlet) {
@@ -110,30 +111,14 @@ console.log(outlet)
     setShowLiveOrder(true);
   }, []);
 
-  const handleAddToCart = (productId) => {
-    dispatch(addItemsToCart(productId, 1));
-    toast.success("Item added to cart");
-  };
-
-  const handleNavigate = () => {
-    if (outlet.location && outlet.location.coordinates) {
-      const [lng, lat] = outlet.location.coordinates;
-      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-      window.open(googleMapsUrl, "_blank");
-    } else {
-      toast.error("Outlet location not available.");
-    }
-  };
-
   useEffect(() => {
     const calculateTimeLeft = () => {
       if (outlet && outlet.outletStatus !== "Closed") {
         const now = new Date();
         const closeTime = new Date(now.toDateString() + " " + outlet.closeTime);
-        const difference = closeTime - now;
+        const difference = closeTime.getTime() - now.getTime();
 
         if (difference > 0 && difference <= 30 * 60 * 1000) {
-          // 30 minutes in milliseconds
           const minutes = Math.floor((difference / 1000 / 60) % 60);
           setTimeLeft(minutes);
           setIsOvertime(false);
@@ -147,12 +132,37 @@ console.log(outlet)
       }
     };
 
-    const timer = setInterval(calculateTimeLeft, 60000); // Update every minute
-
-    calculateTimeLeft(); // Initial calculation
+    const timer = setInterval(calculateTimeLeft, 60000);
+    calculateTimeLeft();
 
     return () => clearInterval(timer);
   }, [outlet]);
+
+  const handleAddToCart = useCallback((productId) => {
+    dispatch(addItemsToCart(productId, 1));
+    toast.success("Item added to cart");
+  }, [dispatch]);
+
+  const handleNavigate = useCallback(() => {
+    if (outlet.location && outlet.location.coordinates) {
+      const [lng, lat] = outlet.location.coordinates;
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+      window.open(googleMapsUrl, "_blank");
+    } else {
+      toast.error("Outlet location not available.");
+    }
+  }, [outlet]);
+
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY;
+    const threshold = 100;
+    setIsSearchSticky(scrollPosition > threshold);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   if (loading) {
     return (
@@ -166,42 +176,55 @@ console.log(outlet)
     <div className="pb-20">
       <MetaData title="Thai Chilli China" />
 
-      <div className="mobile-top">
+      <div className=" mobile-top bg-gradient-to-b from-[#FCF8F7] to-[#FCD8D6] relative w-full z-50 py-2">
         {address && (
-          <div className="location-status">
-            <div className="quick-location">
+          <div className="flex justify-between items-center px-2">
+            <div className="flex items-center">
               <span className="p-2 m-2 bg-gray-200 rounded-full">
                 <CiLocationArrow1 />
               </span>
-              <span>
+              <span className="text-sm">
                 {address.neighborhood || "Unknown locality"},{" "}
                 {address.city || "Unknown city"}
               </span>
             </div>
             <div
-              className={`outlet-status p-2 m-2 ${
+              className={`p-2 m-2 ${
                 outlet.outletStatus === "Closed"
-                  ? "text-danger"
-                  : "text-success"
+                  ? "text-red-500"
+                  : "text-green-500"
               }`}
             >
               {outlet.outletStatus === "Closed" ? (
-                <span className="d-flex items-center">
-                  <CiLock size={25} /> Closed
+                <span className="flex items-center">
+                  <CiLock className="mr-1" /> Closed
                 </span>
               ) : (
-                <span className="d-flex items-center">
-                  <CiUnlock size={25} /> Open
+                <span className="flex items-center">
+                  <CiUnlock className="mr-1" /> Open
                 </span>
               )}
             </div>
           </div>
         )}
-        <div className="mobile-search">
+        <div
+          className={`transition-all duration-300 ease-in-out ${
+            isSearchSticky
+              ? "fixed top-0 left-0 right-0 bg-[#FCF8F7]  z-50 py-2"
+              : ""
+          }`}
+        >
           {isMobile && (
-            <Link to="/search" className="search-box w-full">
-              <span className="material-symbols-outlined fs-2">search</span>
-              <input type="text" placeholder="search here" />
+            <Link
+              to="/search"
+              className="mx-3 my-2 flex items-center justify-between bg-white rounded-lg border p-2.5"
+            >
+              <span className="material-symbols-outlined text-2xl">search</span>
+              <input
+                type="text"
+                placeholder="search here"
+                className="w-full ml-2 outline-none"
+              />
             </Link>
           )}
         </div>
@@ -256,6 +279,7 @@ console.log(outlet)
           <span className="font-medium">Close: {outlet.closeTime}</span>
         </div>
       </div>
+
       <div className="categories-box">
         {subCategories.map((subCategory) => (
           <Link
@@ -404,9 +428,10 @@ console.log(outlet)
       {isAuthenticated && <LastOrderProducts />}
       <LocationPicker />
       <LiveOrder liveOrders={liveOrders} showLiveOrder={showLiveOrder} />
-      <Footer outlet={outlet}/>
+      <Footer outlet={outlet} />
     </div>
   );
 };
 
 export default Home;
+
