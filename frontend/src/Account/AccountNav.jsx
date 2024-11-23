@@ -33,14 +33,14 @@ const AccountNav = () => {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center space-x-2 p-3 transition-colors duration-200 border-b border-gray-200 ${
+        `flex items-center space-x-2 p-3 transition-colors duration-200  ${
           isActive
             ? "bg-indigo-100 text-indigo-700"
             : "text-gray-700 hover:bg-gray-100"
         }`
       }
     >
-      <Icon className="w-5 h-5" />
+      <Icon className="w-6 h-6" />
       <span>{children}</span>
     </NavLink>
   );
@@ -63,9 +63,9 @@ const AccountNav = () => {
       </NavItem>
       <button
         onClick={handleLogout}
-        className="flex items-center space-x-2 w-full p-3 text-left text-red-600 hover:bg-red-50 transition-colors duration-200 border-b border-gray-200"
+        className="flex items-center  ms-3 space-x-4 w-full p-3 text-left text-red-600 hover:bg-red-50 transition-colors duration-200 "
       >
-        <LogOut className="w-5 h-5" />
+        <LogOut className="w-6 h-6" />
         <span>Logout</span>
       </button>
      

@@ -77,11 +77,17 @@ const UpdateProfile = () => {
     formData.append("pincode", pincode || user.deliveryInfo?.pincode || "");
     formData.append(
       "latitude",
-      latitude || location.lat || user.deliveryInfo?.location?.coordinates[0] || ""
+      latitude ||
+        location.lat ||
+        user.deliveryInfo?.location?.coordinates[0] ||
+        ""
     );
     formData.append(
       "longitude",
-      longitude || location.lng || user.deliveryInfo?.location?.coordinates[1] || ""
+      longitude ||
+        location.lng ||
+        user.deliveryInfo?.location?.coordinates[1] ||
+        ""
     );
 
     await dispatch(updateProfile(formData));
@@ -113,20 +119,45 @@ const UpdateProfile = () => {
   return (
     <div className="main-update-profile">
       <MetaData title="Update profile" />
-      <div className="update-profile-image">
-        <img src={avatarPreview} alt="avatar" />
-        <div className="file-input-wrapper">
-          <input
-            type="file"
-            name="avatar"
-            accept="image/*"
-            id="file-input"
-            onChange={handleAvatarChange}
-          />
-          <label htmlFor="file-input">
-            <i className="bi bi-cloud-plus"></i>
-          </label>
-          <p>Choose Avatar</p>
+      <div className="max-w-sm mx-auto bg-white rounded-lg  m-2 border overflow-hidden">
+        <div className="p-2  flex items-center space-x-4">
+          <div className="flex-shrink-0">
+            <img
+              className="h-20 w-20 object-cover rounded-full border-2 borders"
+              src={avatarPreview}
+              alt="Current avatar"
+            />
+          </div>
+          <div className="flex-grow">
+            <input
+              type="file"
+              name="avatar"
+              accept="image/*"
+              id="file-input"
+              onChange={handleAvatarChange}
+              className="hidden"
+            />
+            <label
+              htmlFor="file-input"
+              className="cursor-pointer w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                ></path>
+              </svg>
+              Choose Avatar
+            </label>
+          </div>
         </div>
       </div>
       <form
